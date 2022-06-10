@@ -1,0 +1,281 @@
+  
+  
+  <center>
+    <script>       
+      var go;
+      go=0;
+    </script>
+    <h1>Pr&uuml;fung:</h1>
+    
+    <h3>Sobald die erste Taste gedr&uuml;ckt wird, startet die Pr&uuml;fung!</h3>
+
+    <table border=0 style="border-collapse:collapse;" width="700">
+    <tr><td id="Fails" width=50%>Fehler: 0 (0.0 %)</td><td id="Time">Zeit: 00:00/15:00 [<font stlye="background-color:#0000FF;"></font><font style="background-color:#F0F0F0;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font>]</td></tr>
+    <tr><td id="Tempo" width=50%>Tempo: 0</td><td id="types">Anschl&auml;ge: 0</td></tr>
+    <tr><td id="eff" colspan=2 align=center>Effizienz: 0 </td></tr>
+    <tr><td colspan=2 align=center>
+    <div id="inputpart">
+    <h3 style="border:solid 1px black;"><div id="towrite">Bitte warten, Daten werden geladen!</div></h3><p>
+    <input type=text onKeyup="check();"  id="written"  value="" size=100 maxlen=1000>
+    </div>
+    </td></tr> 
+    </table>
+
+    <script type="text/javascript" src="<@filename@>"></script>
+    <script type="text/javascript">
+      var showID=-1;
+      var texttoWrite=''; 
+      var fails=0;
+      var presses =0;      
+      var oldtime;
+      var failcounts;
+      var lastlength;
+      var total_mins;
+      var entred = new Array();
+      var mustentred = new Array();
+      var entredPtr = 0;
+      oldtime=0;
+      lastlength=0;
+
+      function Space(c)
+      {
+        var txt="";
+        var i;
+        if (c==0) return "";
+        for(i=0;i<c;i++)
+        { txt=txt+'&nbsp;'; } 
+        return txt;
+      }
+
+      function Space2(c)
+      {
+        var txt="";
+        var i;
+        if (c==0) return "";
+        for(i=0;i<c;i++)
+        { txt=txt+' '; } 
+        return txt;
+      }
+
+      function getSecInMinSec(getsec)
+      {
+        var sec= getsec % 60;
+        var min= (getsec-sec) / 60
+        return ((min<10) ? "0"+min:min)+':'+((sec<10) ? "0"+sec:sec)
+      }
+
+      function getValue(id)
+      {
+        return document.getElementById(id).value;
+      }
+
+      function setValue(id, new_value)
+      {
+        document.getElementById(id).value = new_value;
+      }
+ 
+      function getText(id)
+      {
+        return document.getElementById(id).innerHTML;
+      }
+
+      function Round2Dez(src)
+      {
+        return Math.round(src*100)/100;
+      }
+
+      function setText(id, new_value)
+      {
+        document.getElementById(id).innerHTML = new_value;
+      }
+
+     function GetFailLine(code, truecode)
+      {
+        var r;
+        var i;
+        var chr_in_code;
+        r="";
+
+        truecode = truecode.substr(0, code.length);
+        
+          for (i=0;i<truecode.length;i++)
+          {
+            chr_in_code = code.substr(i, 1);
+            if (chr_in_code=='+')
+            {
+              r += '<span class="nofail">'+truecode.substr(i, 1)+"</span>";
+            }
+            else
+            {
+              r += '<span class="isfail">'+code.substr(i, 1)+"</span>";
+            }
+        }
+        return r;
+      }
+   
+      function GenPrintDatas()
+      {
+        var LineCounter;
+        var total;
+        var thisline;
+        var num;
+        var ret;
+  
+        total='';
+        for (LineCounter=0;LineCounter<entredPtr+1;LineCounter++)
+        {
+          num = LineCounter+1<10?"0"+(LineCounter+1):LineCounter+1;
+          thisline =  " "+num+". ";
+          thisline += mustentred[LineCounter].substr(0,entred[LineCounter].length)+"<br>";
+          thisline += Space(4)+GetFailLine(entred[LineCounter],mustentred[LineCounter])+"<br>";
+          total += thisline; 
+        }
+        ret = "<form action='index.php' method='post'>"+
+              "<input type=hidden name='window' value='initprint.php'>"+
+              "<input type=hidden name='src' value='<@filename@>'>"+
+              "<input type=hidden name='failproz' value='"+getText('Fails')+"'>"+
+              "<input type=hidden name='tempo' value='"+getText('Tempo')+"'>"+
+              "<input type=hidden name='presses' value='"+getText('types')+"'>"+
+              "<input type=hidden name='time' value='Zeit: "+getSecInMinSec(total_mins*60)+'/'+getSecInMinSec(total_mins*60)+"'>"+
+              "<input type=hidden name='eff' value='"+getText('eff')+"'>"+
+              "<input type=hidden name='datas' value='"+total+"'>"+
+              "<input type=submit value='Drucken und Schliessen'>"+
+              "</form>" ;
+        return ret;
+
+      }
+
+      function check()
+      {
+        var textwritten;
+        var nowtime;
+        var timediff;
+        var failproz;
+        var tempo;
+        var goodpresses=0;
+        var timediffinp;
+        var savedline;
+ 
+        if (oldtime==0)
+        { 
+          oldtime=new Date();
+          setTimeout('ExitFunc()',total_mins*60000+1000); 
+        }
+          
+        textwritten = getValue('written');
+        nowtime = new Date(); 
+        timediff = Math.round((nowtime-oldtime)/1000);
+         
+
+        if(lastlength==textwritten.length)
+        { return; }
+
+        if(lastlength>textwritten.length)
+        { lastlength = textwritten.length; return; }
+ 
+        if((lastlength+1)<textwritten.length)
+        { textwritten = textwritten.substr(0,lastlength+1); }
+
+
+        setValue('written', textwritten);
+
+
+
+        if((textwritten != texttoWrite.substr(0, textwritten.length)) )
+        {
+          if (failcounts==1)
+          {
+             fails++; 
+             failcounts = 0; 
+             goodpresses++;
+             entred[entredPtr] += textwritten.substr(textwritten.length-1,1);
+          }
+          textwritten = textwritten.substr(0, textwritten.length-1);
+          failcounts=0;
+        }
+        else
+        {  
+           if (failcounts == 1)
+           { entred[entredPtr] += "+"; }
+           failcounts=1; 
+           presses++;        
+        }
+
+        goodpresses=presses-fails;
+        if (goodpresses < 0) goodpresses=0;
+        tempo=((goodpresses / (timediff/60)));
+        failproz=(fails/presses)*100;
+        timediffinp=Math.round((timediff/(total_mins*60))*40);
+        setValue('written',textwritten);
+        setText('Time','Zeit: '+getSecInMinSec(timediff)+'/'+getSecInMinSec(total_mins*60)+' [<font style="background-color:#0000FF;">'+Space(timediffinp)+
+                                         ' </font><font style="background-color:#E0E0E0;">'+Space(40-timediffinp)+'</font>]');
+        setText('Fails','Fehler: '+fails+' ('+Round2Dez(failproz)+'%)');
+        setText('types','Anschl&auml;ge: '+presses);
+        setText('Tempo','Tempo: '+Round2Dez(tempo));
+        setText('eff','Effektivit&auml;t: '+Round2Dez((((100-failproz) * tempo)/30000)*500));
+         
+        if (textwritten==texttoWrite)
+        { nextLine(); }
+
+        if (failcounts==0)
+        {
+          setText('towrite', "["+texttoWrite.substr(0, textwritten.length)+"<font style='background-color:#FF0000'>"+texttoWrite.charAt(textwritten.length)+"</font>"+texttoWrite.substr(textwritten.length+1, 10000)+"]");       
+        }
+        else
+        {
+          setText('towrite', "["+texttoWrite.substr(0, textwritten.length)+"<font style='background-color:#00FF00'>"+texttoWrite.charAt(textwritten.length)+"</font>"+texttoWrite.substr(textwritten.length+1, 10000)+"]");       
+        }
+        lastlength=textwritten.length;
+      }  
+
+      function TimerCall()
+      {
+        setTimeout('TimerCall()', 500);
+        check();
+      }
+    
+      function nextLine()
+      {
+        entredPtr++;
+        entred[entredPtr]="";
+        showID++;
+        if (!sourcetext[showID])
+        {
+          showID=0;
+        }
+          
+        texttoWrite = sourcetext[showID]+" ";
+        setText('towrite', texttoWrite);
+        setValue('written',''); 
+        setText('towrite',"[<font style='background-color:#00FF00'>"+texttoWrite.charAt(0)+"</font>"+texttoWrite.substr(1, 10000)+"]");       
+        failcounts = 1;
+        mustentred[entredPtr] = texttoWrite; 
+      }
+
+      function ExitFunc()
+      {
+        var failproz;
+        var note;
+        alert('Fertig!');
+        failproz=(fails/presses)*100;       
+        if (failproz > 3)
+        { failproz = 3; }
+
+        note = ((3-failproz)/3)*5+1; 
+
+        document.getElementById('inputpart').innerHTML='<h2>Fertig</h2><h2>Ihre Note <font color=red>'+note+'</font><h2><a href="select.html">Zur&uuml;ck zur &Uuml;bungsauswahl</a><br><h5>ACHTUNG: Die Berechnung der Note stimmt nicht mit der Berechnung der Hopro &uuml;berein sondern ist MILDER (3%->1; 1%->4,33)</h5><p>'+GenPrintDatas();
+      }
+      
+
+      total_mins=<@totalmins@>;
+      entredPtr=-1;
+      nextLine();
+      setText('Time','Zeit: '+'00:00/'+getSecInMinSec(total_mins*60)+' [<font style="background-color:#0000FF;">'+Space(0)+
+                                       ' </font><font style="background-color:#E0E0E0;">'+Space(40)+'</font>]');
+      document.getElementById('written').focus();
+      document.onselectstart=new Function("return false;");
+      document.oncontextmenu=new Function("return false;");
+    </script>
+    
+  </body>
+</html>

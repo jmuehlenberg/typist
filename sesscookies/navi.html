@@ -1,0 +1,58 @@
+<script type="text/javascript">
+  function DropDownMenu(Name, Title, Entries, Max)
+  {
+    var i;
+    var txt;
+
+    document.writeln('<div>');
+    document.writeln('<table padding=0 border=0 class=menu_table style="border-collapse:collapse;">');
+    document.writeln('<tr><td colspan=2 align=left><span class="menu_title"><b>'+Title+'</b></span></td></tr>');
+
+    txt="";
+    for (i=0;i<Max;i++)
+    { txt=txt+Entries[i]+'<br>'; }
+
+    txt = txt.substring(0, txt.length-4);
+    document.writeln('<tr><td width=10px></td><td style="border:solid 0px black;"><div class="showdiv" style="" id="'+Name+'">'+txt+'</div></td></tr></table></div><br>');
+  }
+  
+  function AddDestLink(Text, URL, Dest)
+  {
+    return '<a class="menu_link" target="'+Dest+'" href="'+URL+'">'+Text+'</a>';
+  }
+
+  function AddLink(Text, URL)
+  {
+    return '<a class="menu_link" href="'+URL+'">'+Text+'</a>';
+  }
+
+  function AddText(Text)
+  {
+    return '<span class="menu_text">'+Text+'</span>';
+  }
+
+	
+  DropDownMenu('Lektionen', '<center>Lektionen</center>', new Array(AddLink('<table class="menupoint"><td>Lektion 1</td></table>', 'index.php?window=lektionen/lektion1.html'),
+                                                   AddLink('<table class="menupoint"><td>Lektion 2</td></table>', 'index.php?window=lektionen/lektion2.html'),
+                                                   AddLink('<table class="menupoint"><td>Lektion 3</td></table>', 'index.php?window=lektionen/lektion3.html'),
+                                                   AddLink('<table class="menupoint"><td>Lektion 4</td></table>', 'index.php?window=lektionen/lektion4.html'),
+                                                   AddLink('<table class="menupoint"><td>Lektion 5</td></table>', 'index.php?window=lektionen/lektion5.html'),
+                                                   AddLink('<table class="menupoint"><td>Lektion 6</td></table>', 'index.php?window=lektionen/lektion6.html'),
+                                                   AddLink('<table class="menupoint"><td>Lektion 7</td></table>', 'index.php?window=lektionen/lektion7.html'),
+                                                   AddLink('<table class="menupoint"><td>Lektion 8</td></table>', 'index.php?window=lektionen/lektion8.html'),
+                                                   AddLink('<table class="menupoint"><td>Lektion 9</td></table>', 'index.php?window=lektionen/lektion9.html'),
+                                                   AddLink('<table class="menupoint"><td>Lektion 10</td></table>', 'index.php?window=lektionen/lektion10.html'),
+                                                   AddLink('<table class="menupoint"><td>Lektion 11</td></table>', 'index.php?window=lektionen/lektion11.html'),
+                                                   AddLink('<table class="menupoint"><td>Lektion 12</td></table>', 'index.php?window=lektionen/lektion12.html'),
+                                                   AddLink('<table class="menupoint"><td>Lektion 13</td></table>', 'index.php?window=lektionen/lektion13.html'),
+                                                   AddLink('<table class="menupoint"><td>Lektion 14</td></table>', 'index.php?window=lektionen/lektion14.html'),
+												   AddLink('<table class="menupoint"><td>Gesamtpr&uuml;fung</td></table>', 'index.php?window=load.php&src=lektionen/reptotal.js')), 15);
+
+  DropDownMenu('Pruefungen', '<center>Pr&uuml;fungen</center>', new Array(AddLink('<table class="menupoint"><td>Pr&uuml;fung zu Lektion 3</td></table>', 'index.php?window=loadprf.php&src=prfs/prf3.js&mins=15'),
+                                                         AddLink('<table class="menupoint"><td>Pr&uuml;fung zu Lektion 6</td></table>', 'index.php?window=loadprf.php&src=prfs/prf6.js&mins=10'),
+                                                         AddLink('<table class="menupoint"><td>Pr&uuml;fung zu Lektion 7</td></table>', 'index.php?window=loadprf.php&src=prfs/prf7.js&mins=15'),
+                                                         AddLink('<table class="menupoint"><td>Pr&uuml;fung zu Lektion 10</td></table>', 'index.php?window=loadprf.php&src=prfs/prf10.js&mins=15'),
+                                                         AddLink('<table class="menupoint"><td>Pr&uuml;fung zu Lektion 11</td></table>', 'index.php?window=loadprf.php&src=prfs/prf11.js&mins=15'),
+                                                         AddLink('<table class="menupoint"><td>Gesamtrepetiton</td></table>', 'index.php?window=loadprf.php&src=prfs/prftotal.js&mins=20')), 6);
+
+</script>
