@@ -1,0 +1,59 @@
+<?php
+  function EasyCrypt($s)
+  {
+    srand((double)microtime()*time());
+    $key=rand(0,5);
+    for($i=0; $i<strlen($s); $i++)
+    { $s[$i] = chr(ord($s[$i])+$key+$i); }
+    return chr(($key+50)).$s;
+  }
+  function EasyUnCrypt($s)
+  {
+    $key = (ord($s[0])-50);
+    $s = substr($s,1);
+    for($i=0; $i<strlen($s); $i++)
+    { $s[$i] = chr(ord($s[$i])-$key-$i); }
+    return $s;
+  }
+
+  $x = file('print.html');
+  $txt=implode('',$x);
+  $txt = str_replace('<@src@>', $_POST['src'], $txt);
+  $txt = str_replace('<@datas@>', $_POST['datas'], $txt);
+  $txt = str_replace('<@timespan@>', $_POST['time'], $txt);
+  $txt = str_replace('<@from@>', ($_COOKIE['username'] ? $_COOKIE['username']:"Unbekannter Benutzer") , $txt);
+  $txt = str_replace('<@time@>', strftime("%d.%m.%Y %H.%M.%S",time()), $txt);
+  $txt = str_replace('<@fails@>', $_POST['failproz'], $txt);
+  $txt = str_replace('<@eff@>', $_POST['eff'], $txt);
+  $txt = str_replace('<@speed@>', $_POST['tempo'], $txt);
+  $txt = str_replace('<@types@>', $_POST['presses'], $txt);
+  $timestamp = (string)time();
+  $filename="prints/$timestamp.html";
+  $file = fopen($filename, "w");
+ 
+  if ($file)  
+  {
+    
+    fputs($file, stripslashes($txt));
+    fclose($file);
+    echo "<h3 align=center><a href='$filename' target='_blank' >Jetzt drucken!</a></center>";
+  }
+  else
+  {
+    echo "<h3 align=center>Interner Dateifehler, leider kann nicht gedruckt werden :(</h3>";
+  }
+
+  $download="prints/$timestamp.mtp";
+  $file = fopen($download, "w");
+  if ($file)  
+  {
+    fputs($file, EasyCrypt(stripslashes($txt)));
+    fclose($file);
+    echo "<p><h3 align=center><a href='$download' target='_blank' >Hier dr&uuml;cken um Datei herunterzuladen!</a></center>";
+  }
+  else
+  {
+    echo "<h3 align=center>Interner Dateifehler, leider kann nicht gedruckt werden :(</h3>";
+  }
+    
+?>

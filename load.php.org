@@ -1,0 +1,33 @@
+<center>
+  <h1>Einstellungen f&uuml;r <?php echo $_GET[src]; ?></h1> 
+  <p>
+  <table border=0 style="border-collapse:collapse;" cellpadding=4px>
+  <form method="get" action="index.php">
+  <tr><td>Erste Zeile: <input type="text" name="firstLine" value="1" id="form_firstLine" onBlur="CheckInput('form_firstLine',1)"></td>
+      <td>Letzte Zeile*: <input type="text" name="lastLine" value="0" id="form_lastLine" onBlur="CheckInput('form_lastLine',0)"></td>     
+  </tr> 
+  <tr><td>Zeilen <input type="text" name="writeCount" value="1" id="form_writeCount" onBlur="CheckInput('form_writeCount',1)"> tippen</td>
+      <td>Letzes Zeichen: <select name="lastLetter"><option selected value=" ">Leerstelle</option><option value="">Nichts</option></select></td>     
+  </tr> 
+  <input type=hidden name="src" value="<?php echo $_GET[src]; ?>">
+  <input type=hidden name="window" value="loadsecond.php">
+  <tr><td align=center colspan=2><input type=submit value="&Uuml;bung jetzt starten"></td></tr>
+  </form>
+  </table>
+  <h5>*0 = Komplette Übung </h5> <p>
+  <h4><a target='__blank' href='showlek.php?src=<?php echo $_GET[src]; ?>'>&Uuml;bungsvorschau</a></h4>
+<script language="javascript">
+  function CheckInput(ctrl, minwert)
+  {
+    var x;
+    x = Math.round(document.getElementById(ctrl).value);
+    if (x<minwert)
+    {
+      alert("Ung&uuml;ltiger Wert!");
+      x=minwert;
+    }
+    document.getElementById(ctrl).value=x;
+  }
+</script> 
+</center>
+

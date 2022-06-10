@@ -1,0 +1,27 @@
+<?php
+  function OpenDB()
+  {
+    $con = mysql_connect('localhost', 'typewriter', '134n@sSz');
+    if (!$con)
+    {
+      return false;
+    }
+    else
+    {
+      if (mysql_select_db('mcadmin_typewriter'))
+      {
+        return true; 
+      } 
+      else
+      {
+        return false;
+      }
+    }
+  }
+   
+  function CloseDB()
+  {
+    mysql_close();
+  }
+
+?>
