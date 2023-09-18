@@ -65,7 +65,7 @@
       $res=mysql_query($sql);
       if ($res)
       {
-        echo "<h3 align=center>Ihr MyType Account wurde gel&ouml;scht</h3>";
+        echo "<h3 align=center>Ihr Typist Account wurde gel&ouml;scht</h3>";
         echo "<h3 align=center>Schade...</h3>";
       }
       else
