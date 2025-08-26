@@ -11,7 +11,7 @@ sourcetext = new Array("In seiner Wohnung ass Thomas Weisswurst und trank Most d
 "Das umfangreiche Warenangebot war originell und vorteilhaft",
 "Wollt ihr die monatelange Weltreise zu zweit wirklich wagen",
 "Oskar telefoniert ununterbrochen wegen dieser Wollstoffe",
-"Das Novemberwetter an der Ostsee war oft bewölkt und windig",
+"Das Novemberwetter an der Ostsee war oft bewÃ¶lkt und windig",
 "Der wachsame Wolfshund Rico verfolgte die Situation genau",
 "Am kommenden Mittwoch fahren Walter und Wilma nach Wollerau",
 "Sie konnten am Schwarzsee weder schwimmen noch schnorcheln",
