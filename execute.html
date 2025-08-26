@@ -222,8 +222,7 @@
 			setText('Tempo','Tempo: '+Round2Dez(tempo));
 			setText('eff','Effektivit&auml;t: '+Round2Dez((((100-failproz) * tempo)/30000)*500));
 			 
-			if (textwritten==texttoWrite)
-			{ nextLine(); }
+			if (textwritten==texttoWrite) { nextLine(); textwritten = getValue('written'); lastlength=0; }
 
 			if (failcounts==0)
 			{
@@ -306,5 +305,41 @@
       document.oncontextmenu=new Function("return false;");
     </script>
     
-  </body>
+  
+<script>
+// Sofortige Hervorhebung am Zeilenanfang nach Zeilenwechsel
+(function(){
+  function forceHighlightStart(){
+    try {
+      if (typeof lastlength !== 'undefined') lastlength = 0;
+      if (typeof currentPos !== 'undefined') currentPos = 0;
+      if (typeof check === 'function') {
+        requestAnimationFrame(function(){ try { check(); } catch(e){} });
+      }
+    } catch(e){}
+  }
+  // NextLine()-Hook, falls vorhanden
+  if (typeof NextLine === 'function') {
+    var __origNextLine = NextLine;
+    NextLine = function(){
+      var r = __origNextLine.apply(this, arguments);
+      forceHighlightStart();
+      return r;
+    };
+  }
+  // Fallback: beobachte showID-Änderungen
+  (function watch(){
+    try {
+      if (typeof window.__lastShowId === 'undefined') window.__lastShowId = null;
+      if (typeof showID !== 'undefined' && showID !== window.__lastShowId) {
+        window.__lastShowId = showID;
+        forceHighlightStart();
+      }
+    } catch(e){}
+    requestAnimationFrame(watch);
+  })();
+})();
+</script>
+
+</body>
 </html>

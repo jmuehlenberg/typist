@@ -31,6 +31,10 @@
     return '<span class="menu_text">'+Text+'</span>';
   }
 
+DropDownMenu('Hilfe', '<center>Hilfe</center>', 
+  new Array(
+    AddLink('<table class="menupoint"><td>Hilfe</td></table>', 'index.php?window=hilfe.html')
+  ), 1);
 	
   DropDownMenu('Lektionen', '<center>Lektionen</center>', new Array(AddLink('<table class="menupoint"><td>Lektion 1</td></table>', 'index.php?window=lektionen/lektion1.html'),
                                                    AddLink('<table class="menupoint"><td>Lektion 2</td></table>', 'index.php?window=lektionen/lektion2.html'),

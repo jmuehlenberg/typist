@@ -1,0 +1,86 @@
+<!-- hilfe.html (Fragment für include in index.php) -->
+<div class="help">
+  <style>
+    .help { font-family: Arial, sans-serif; line-height: 1.6; color: #222; }
+    .help h1, .help h2 { color: #003366; margin: 0; }
+    .help h1 { margin-bottom: .6em; }
+    .help h2 { margin-top: 1.4em; border-bottom: 2px solid #ccc; padding-bottom: .25em; }
+    .help ul { margin: .5em 0 1em 1.5em; }
+    .help .tip { background: #e8f5e9; border-left: 4px solid #4caf50; padding: .8em; margin: 1em 0; }
+    .help .note { background: #fff3cd; border-left: 4px solid #ff9800; padding: .8em; margin: 1em 0; }
+    .help footer { margin-top: 2em; font-size: .9em; color: #555; border-top: 1px solid #ccc; padding-top: .8em; }
+  </style>
+
+  <h1>📖 Benutzer‑Dokumentation – Typist</h1>
+
+  <h2>1. Startseite &amp; Navigation</h2>
+  <p>Nach dem Aufruf von <strong>index.php</strong> öffnet sich die Startseite. Links befindet sich die Navigation mit:</p>
+  <ul>
+    <li><strong>Lektionen</strong> – nach Kapiteln geordnet</li>
+    <li><strong>Prüfungen</strong> – z. B. Prüfung 1–5</li>
+    <li><strong>Gesamtrepetition</strong> – Wiederholung aller Lektionen</li>
+    <li>Weitere Menüpunkte wie <strong>Registrieren</strong> oder <strong>Informationen</strong></li>
+  </ul>
+  <p>Rechts erscheint jeweils der gewählte Inhalt.</p>
+
+  <h2>2. Lektionen</h2>
+  <ul>
+    <li>Der Text erscheint rechts im Fenster.</li>
+    <li>Das <em>zu tippende Zeichen</em> wird <span style="color:green;">grün</span> markiert.</li>
+    <li>Die Lektion endet automatisch, sobald der Text aufgebraucht ist.</li>
+    <li>Die Zeit läuft nur mit, hat aber keine feste Vorgabe.</li>
+  </ul>
+
+  <h2>3. Prüfungen &amp; Gesamtrepetition</h2>
+  <ul>
+    <li>Feste Dauer (z. B. 15 Min.).</li>
+    <li>Die Zeit startet erst mit dem ersten Tastendruck.</li>
+    <li>Anzeige läuft sekundengenau und stoppt bei der Vorgabezeit.</li>
+    <li>Am Ende erscheint das Ergebnis mit Druck‑/PDF‑Option.</li>
+  </ul>
+
+  <h2>4. Bedienung während einer Übung</h2>
+  <ul>
+    <li>Tippe den Text <em>genau so</em>, inkl. Leer‑ und Satzzeichen.</li>
+    <li>Tippfehler werden sofort farblich markiert.</li>
+    <li><kbd>Backspace</kbd> kann für Korrekturen genutzt werden.</li>
+    <li>Angezeigt werden: Zeit, Anschläge, Fehler.</li>
+  </ul>
+
+  <h2>5. Ergebnis &amp; Ausdruck</h2>
+  <ul>
+    <li>Getippter Text</li>
+    <li>Anschlagszahl</li>
+    <li>Fehlerquote</li>
+    <li>Zeitangabe</li>
+  </ul>
+  <p>Ergebnis kann im Browser <strong>gedruckt</strong> oder als <strong>PDF</strong> gespeichert werden.</p>
+
+  <h2>6. Registrierung &amp; Benutzername</h2>
+  <p>Über „Registrieren“ kannst du einen Benutzernamen anlegen, der in Ausdrucken/PDFs erscheint.</p>
+
+  <h2>7. Tipps für effektives Training</h2>
+  <div class="tip">
+    <ul>
+      <li>Lieber mehrere kurze Lektionen pro Tag als eine lange.</li>
+      <li>Aufrechte Sitzhaltung und ruhige Handhaltung.</li>
+      <li>Nicht auf die Tastatur schauen.</li>
+      <li>Erst fehlerfrei, dann schneller werden.</li>
+    </ul>
+  </div>
+
+  <h2>8. Besonderheiten</h2>
+  <ul>
+    <li><strong>Lektionen</strong> enden automatisch mit dem Text.</li>
+    <li><strong>Prüfungen/Repetition</strong> enden mit Ablauf der Zeitvorgabe.</li>
+    <li>Die grüne Hervorhebung zeigt stets das nächste Zeichen korrekt an.</li>
+  </ul>
+
+  <footer>
+    © 2016 – <span id="cpYear"></span> muehlenberg.ch – Typist Online‑Schreibtrainer
+  </footer>
+
+  <script>
+    (function(){ var el=document.getElementById('cpYear'); if(el){ el.textContent=(new Date()).getFullYear(); } })();
+  </script>
+</div>
